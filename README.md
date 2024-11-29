@@ -48,9 +48,9 @@ We prepared the Docker image for quick and easy installation. Please follow the 
 
 ```bash
 # Download
-git clone https://github.com/d.svitov/bbsplat.git --recursive
+git clone https://github.com/david-svitov/BBSplat.git --recursive
 # Go to the "docker" subfolder
-cd bbsplat/docker
+cd BBSplat/docker
 
 # Build Docker image
 bash build.sh
@@ -68,7 +68,7 @@ bash bbsplat_install.sh
 To use COLMAP you can also use provided Docker image in the ```docker_colmap``` as follows:
 
 ```bash
-cd bbsplat/docker_colmap
+cd BBSplat/docker_colmap
 # Optionally adjust mounting folder paths in source.sh
 # Run Docker container
 bash run.sh
