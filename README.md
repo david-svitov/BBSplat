@@ -1,6 +1,6 @@
 # BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis
 
-[Project page](https://david-svitov.github.io/BBSplat_project_page/) | [Paper](https://arxiv.org/pdf/2411.18625) | [Video](https://www.youtube.com/watch?v=uRM7WFo5vVg) | [BBSplat Rasterizer (CUDA)](https://github.com/david-svitov/diff-bbsplat-rasterization/) | [Scenes example (1.5GB)](https://drive.google.com/file/d/1gu_bDFXx38KJtwIrXo8lMVtuY-P2PFXX/view?usp=sharing) |<br>
+[Project page](https://david-svitov.github.io/BBSplat_project_page/) | [Paper](https://arxiv.org/pdf/2411.08508) | [Video](https://www.youtube.com/watch?v=uRM7WFo5vVg) | [BBSplat Rasterizer (CUDA)](https://github.com/david-svitov/diff-bbsplat-rasterization/) | [Scenes example (1.5GB)](https://drive.google.com/file/d/1gu_bDFXx38KJtwIrXo8lMVtuY-P2PFXX/view?usp=sharing) |<br>
 
 ![Teaser image](assets/readme_images/teaser.png)
 
