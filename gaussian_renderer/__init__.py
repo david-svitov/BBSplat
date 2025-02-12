@@ -91,6 +91,10 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
     texture_alpha = pc.get_texture_alpha
     texture_color = pc.get_texture_color
 
+    start_timer = torch.cuda.Event(enable_timing=True)
+    end_timer = torch.cuda.Event(enable_timing=True)
+    start_timer.record()
+
     rendered_image, radii, impact, allmap = rasterizer(
         means3D = means3D,
         means2D = means2D,
@@ -102,6 +106,11 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
         rotations = rotations,
         cov3D_precomp = cov3D_precomp,
     )
+
+    end_timer.record()
+    torch.cuda.synchronize()
+    start_timer.elapsed_time(end_timer)
+    fps = 1000 / start_timer.elapsed_time(end_timer)
     
     # Those Gaussians that were frustum culled or had a radius of 0 were not visible.
     # They will be excluded from value updates used in the splitting criteria.
@@ -110,6 +119,7 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
             "visibility_filter" : impact > 0,
             "radii": radii,
             "impact": impact,
+            "fps": fps,
     }
 
     if additional_return:

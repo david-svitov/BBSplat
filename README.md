@@ -1,19 +1,18 @@
 # BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis
 
-[Project page](https://david-svitov.github.io/BBSplat_project_page/) | [Paper](https://arxiv.org/pdf/2411.08508) | [Video](https://www.youtube.com/watch?v=uRM7WFo5vVg) | [BBSplat Rasterizer (CUDA)](https://github.com/david-svitov/diff-bbsplat-rasterization/) | [Scenes example (1.5GB)](https://drive.google.com/file/d/1gu_bDFXx38KJtwIrXo8lMVtuY-P2PFXX/view?usp=sharing) |<br>
+[Project page](https://david-svitov.github.io/BBSplat_project_page/) | [Paper](https://arxiv.org/pdf/2411.08508) | [BBSplat Rasterizer (CUDA)](https://github.com/david-svitov/diff-bbsplat-rasterization/) | [Scenes example (1.5GB)](https://drive.google.com/file/d/1gu_bDFXx38KJtwIrXo8lMVtuY-P2PFXX/view?usp=sharing) |<br>
+
 
 ![Teaser image](assets/readme_images/teaser.png)
 
 ## Abstract
-We present billboard Splatting (BBSplat) - a novel approach for 3D scene representation based on textured geometric primitives. 
-BBSplat represents the scene as a set of optimizable textured planar primitives with learnable RGB textures and alpha-maps to control 
-their shape. BBSplat primitives can be used in any Gaussian Splatting pipeline as drop-in replacements for Gaussians. Our method's 
-qualitative and quantitative improvements over 3D and 2D Gaussians are most noticeable when fewer primitives are used, 
-when BBSplat achieves over 1200 FPS. Our novel regularization term encourages textures to have a sparser structure, 
-unlocking an efficient compression that leads to a reduction in storage space of the model. Our experiments show the efficiency 
-of BBSplat on standard datasets of real indoor and outdoor scenes such as Tanks&Temples, DTU, and Mip-NeRF-360. We demonstrate 
-improvements on PSNR, SSIM, and LPIPS metrics compared to the state-of-the-art, especially for the case when fewer primitives
-are used, which, on the other hand, leads to up to $2 \times$ inference speed improvement for the same rendering quality.
+We present billboard Splatting (BBSplat) - a novel approach for 3D scene representation based on textured geometric primitives. BBSplat represents the scene as a set of optimizable textured planar primitives with learnable RGB textures and alpha-maps to control their shape. BBSplat primitives can be used in any Gaussian Splatting pipeline as drop-in replacements for Gaussians.
+The proposed primitives close the rendering quality gap between 2D and 3D Gaussian Splatting (GS), preserving the accurate mesh extraction ability of 2D primitives.
+Our novel regularization term encourages textures to have a sparser structure, unlocking an efficient compression that leads to a reduction in the storage space of the model. Our experiments show the efficiency of BBSplat on standard datasets of real indoor and outdoor scenes such as Tanks&Temples, DTU, and Mip-NeRF-360. 
+
+## Updates
+
+* 10/02/2025 - We fixed a bug in the FPS measurement function and updated the preprint accordingly.
 
 ## Repository structure
 

@@ -8,9 +8,7 @@
 #
 # For inquiries contact  huangbb@shanghaitech.edu.cn
 #
-import math
 import os
-import time
 from functools import partial
 from statistics import mean, stdev
 
@@ -64,10 +62,8 @@ class GaussianExtractor(object):
             iterator = enumerate(self.viewpoint_stack)
 
         for i, viewpoint_cam in iterator:
-            start_time = time.time()
             render_pkg = self.render(viewpoint_cam, self.gaussians)
-            stop_time = time.time()
-            times.append(1 / (stop_time - start_time))
+            times.append(render_pkg['fps'])
             rgb = render_pkg['render']
             self.rgbmaps.append(rgb.cpu())
             if self._additional_return:
