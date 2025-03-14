@@ -25,7 +25,7 @@ class Scene:
     gaussians : GaussianModel
 
     def __init__(self, args : ModelParams, gaussians : GaussianModel, load_iteration=None, shuffle=True, resolution_scales=[1.0],
-                 add_sky_box=False, max_read_points=60_000):
+                 add_sky_box=False, max_read_points=60_000, sphere_point=10_000):
         """b
         :param path: Path to colmap scene main folder.
         """
@@ -85,7 +85,7 @@ class Scene:
             self.gaussians.load_ply(os.path.join(folder_path, "point_cloud.ply"))
             self.gaussians.load_texture(folder_path)
         else:
-            self.gaussians.create_from_pcd(scene_info.point_cloud, self.cameras_extent, add_sky_box=add_sky_box)
+            self.gaussians.create_from_pcd(scene_info.point_cloud, self.cameras_extent, add_sky_box=add_sky_box, sphere_point=sphere_point)
 
     def save(self, iteration):
         point_cloud_path = os.path.join(self.model_path, "point_cloud/iteration_{}".format(iteration))

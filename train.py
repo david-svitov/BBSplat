@@ -42,7 +42,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
     first_iter = 0
     tb_writer = prepare_output_and_logger(dataset)
     gaussians = GaussianModel(dataset.sh_degree)
-    scene = Scene(dataset, gaussians, add_sky_box=opt.add_sky_box, max_read_points=opt.max_read_points)
+    scene = Scene(dataset, gaussians, add_sky_box=opt.add_sky_box, max_read_points=opt.max_read_points, sphere_point=opt.sphere_point)
     gaussians.training_setup(opt)
     if checkpoint:
         (model_params, first_iter) = torch.load(checkpoint)
@@ -85,10 +85,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
         
         gt_image = viewpoint_cam.original_image.cuda()
 
-        image_ycbcr = image
-        gt_image_ycbcr = gt_image
-
-        Ll1 = l1_loss(image_ycbcr, gt_image_ycbcr)
+        Ll1 = l1_loss(image, gt_image)
         ssim_map = ssim(image, gt_image, size_average=False)
         loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * (1.0 - ssim_map.mean())
         
@@ -159,7 +156,8 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
             # Densification
             if iteration < opt.densify_until_iter and iteration > opt.densify_from_iter and iteration % opt.densification_interval == 0:
                 size = len(gaussians.get_texture_alpha)
-                dead_mask = (gaussians.get_texture_alpha.view(size, -1).mean(1) <= 0.005).squeeze(-1)
+                dead_mask = (gaussians.get_texture_alpha.view(size, -1).mean(1) <= opt.dead_opacity).squeeze(-1)
+                
                 gaussians.relocate_gs(dead_mask=dead_mask)
                 gaussians.add_new_gs(cap_max=opt.cap_max)
 

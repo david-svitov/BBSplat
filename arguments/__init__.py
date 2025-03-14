@@ -53,7 +53,7 @@ class ModelParams(ParamGroup):
         self._resolution = -1
         self._white_background = False
         self.data_device = "cuda"
-        self.eval = True
+        self.eval = False
         super().__init__(parser, "Loading Parameters", sentinel)
 
     def extract(self, args):
@@ -83,11 +83,12 @@ class OptimizationParams(ParamGroup):
         self.texture_color_lr = 0.0025
         self.percent_dense = 0.1
         self.lambda_dssim = 0.2
-        self.lambda_dist = 0.0 #100.0
-        self.lambda_normal = 0.0 #0.05
+        self.lambda_dist = 0.0
+        self.lambda_normal = 0.0
         self.lambda_texture_value = 0.0001
         self.lambda_alpha_value = 0.0001
         self.max_impact_threshold = 500
+        self.sphere_point = 10000
 
         # Densification policy
         self.texture_from_iter = 500
@@ -95,6 +96,7 @@ class OptimizationParams(ParamGroup):
         self.densification_interval = 100
         self.densify_from_iter = 500
         self.densify_until_iter = 25000
+        self.dead_opacity = 0.005
 
         # MCMC
         self.noise_lr = 5e5

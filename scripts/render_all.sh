@@ -1,35 +1,37 @@
 #!/bin/bash
 cd ..
 DATA_FOLDER=/media/dsvitov/DATA/
-OUTPUT_FOLDER=/media/dsvitov/DATA/output/debug
+OUTPUT_FOLDER=/media/dsvitov/DATA/output/Ours
 
 # Process Tanks&Temples
-python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Train_COLMAP --model_path=${OUTPUT_FOLDER}/TnT/Train
-python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Training/Truck_COLMAP --model_path=${OUTPUT_FOLDER}/TnT/Truck
-python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Francis_COLMAP --model_path=${OUTPUT_FOLDER}/TnT/Francis
-python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Horse_COLMAP --model_path=${OUTPUT_FOLDER}/TnT/Horse
-python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Lighthouse_COLMAP --model_path=${OUTPUT_FOLDER}/TnT/Lighthouse
+python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Train_COLMAP_big --model_path=${OUTPUT_FOLDER}/TnT/Train --skip_mesh
+python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Training/Truck_COLMAP_big --model_path=${OUTPUT_FOLDER}/TnT/Truck --skip_mesh
+python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Francis_COLMAP_big --model_path=${OUTPUT_FOLDER}/TnT/Francis --skip_mesh
+python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Horse_COLMAP_big --model_path=${OUTPUT_FOLDER}/TnT/Horse --skip_mesh
+python render.py -s ${DATA_FOLDER}/Tanks_and_Temples/Intermediate/Lighthouse_COLMAP_big --model_path=${OUTPUT_FOLDER}/TnT/Lighthouse --skip_mesh
 
 # Mip-NeRF-360
-python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/bonsai/COLMAP --model_path=${OUTPUT_FOLDER}/MipNerf/Bonsai
-python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/counter/COLMAP --model_path=${OUTPUT_FOLDER}/MipNerf/Counter
-python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/kitchen/COLMAP --model_path=${OUTPUT_FOLDER}/MipNerf/Kitchen
-python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/room/COLMAP --model_path=${OUTPUT_FOLDER}/MipNerf/Room
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/bonsai --model_path=${OUTPUT_FOLDER}/MipNerf/Bonsai --skip_mesh
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/counter --model_path=${OUTPUT_FOLDER}/MipNerf/Counter --skip_mesh
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/kitchen --model_path=${OUTPUT_FOLDER}/MipNerf/Kitchen --skip_mesh
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/room --model_path=${OUTPUT_FOLDER}/MipNerf/Room --skip_mesh
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/bicycle --model_path=${OUTPUT_FOLDER}/MipNerf/Bicycle --skip_mesh
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/stump --model_path=${OUTPUT_FOLDER}/MipNerf/Stump --skip_mesh
+python render.py -s ${DATA_FOLDER}/Mip-NeRF-360/360_v2/garden --model_path=${OUTPUT_FOLDER}/MipNerf/Garden --skip_mesh
 
 # Process DTU
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan24_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan24
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan37_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan37
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan40_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan40
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan55_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan55
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan63_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan63
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan65_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan65
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan69_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan69
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan83_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan83
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan97_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan97
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan105_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan105
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan106_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan106
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan110_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan110
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan114_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan114
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan118_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan118
-python render.py -s ${DATA_FOLDER}/DTU/selected/scan122_COLMAP --model_path=${OUTPUT_FOLDER}/DTU/scan122
-
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan24 --model_path=${OUTPUT_FOLDER}/DTU/scan24 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan37 --model_path=${OUTPUT_FOLDER}/DTU/scan37 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan40 --model_path=${OUTPUT_FOLDER}/DTU/scan40 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan55 --model_path=${OUTPUT_FOLDER}/DTU/scan55 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan63 --model_path=${OUTPUT_FOLDER}/DTU/scan63 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan65 --model_path=${OUTPUT_FOLDER}/DTU/scan65 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan69 --model_path=${OUTPUT_FOLDER}/DTU/scan69 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan83 --model_path=${OUTPUT_FOLDER}/DTU/scan83 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan97 --model_path=${OUTPUT_FOLDER}/DTU/scan97 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan105 --model_path=${OUTPUT_FOLDER}/DTU/scan105 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan106 --model_path=${OUTPUT_FOLDER}/DTU/scan106 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan110 --model_path=${OUTPUT_FOLDER}/DTU/scan110 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan114 --model_path=${OUTPUT_FOLDER}/DTU/scan114 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan118 --model_path=${OUTPUT_FOLDER}/DTU/scan118 --skip_mesh
+python render.py -s ${DATA_FOLDER}DTU/dtu/DTU/scan122 --model_path=${OUTPUT_FOLDER}/DTU/scan122 --skip_mesh

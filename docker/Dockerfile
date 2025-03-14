@@ -57,22 +57,19 @@ RUN apt-get update && apt-get install -y sudo curl && \
     printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 USER $USERNAME:$USERNAME
 
-# miniconda
+# miniforge
 WORKDIR /home/$USERNAME
 ENV CONDA_AUTO_UPDATE_CONDA=false
-ENV PATH=/home/$USERNAME/miniconda/bin:$PATH
+ENV PATH=/home/$USERNAME/miniforge/bin:$PATH
 
-RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py38_4.12.0-Linux-x86_64.sh -O ~/miniconda.sh && \
-    chmod +x ~/miniconda.sh && \
-    ~/miniconda.sh -b -p ~/miniconda
-    # && \
-    # rm ~/miniconda.sh && \
-
+RUN wget --quiet https://github.com/conda-forge/miniforge/releases/download/24.11.3-2/Miniforge3-24.11.3-2-Linux-x86_64.sh -O ~/miniforge.sh && \
+    chmod +x ~/miniforge.sh && \
+    ~/miniforge.sh -b -p ~/miniforge
 
 #RUN echo 112
 COPY docker/environment.yml /home/$USERNAME/environment.yml
 RUN conda env create -f /home/$USERNAME/environment.yml
-ENV PATH=/home/$USERNAME/miniconda/envs/bbsplat/bin:$PATH
+ENV PATH=/home/$USERNAME/miniforge/envs/bbsplat/bin:$PATH
 
 RUN echo "source activate bbsplat" > ~/.bashrc
 ENV PATH /opt/conda/envs/bbsplat/bin:$PATH

@@ -17,6 +17,7 @@ import torch
 from plyfile import PlyData, PlyElement
 from simple_knn._C import distCUDA2
 from torch import nn
+import torch.nn.functional as F
 import torchvision
 
 from utils.general_utils import inverse_sigmoid, get_expon_lr_func, build_rotation
@@ -121,7 +122,11 @@ class GaussianModel:
     @property
     def get_xyz(self):
         return self._xyz
-    
+
+    @property
+    def get_features_first(self):
+        return self._features_dc[:, :3]
+
     @property
     def get_features(self):
         features_dc = self._features_dc
@@ -168,11 +173,11 @@ class GaussianModel:
 
         return np.asarray(points)
 
-    def create_from_pcd(self, pcd : BasicPointCloud, spatial_lr_scale : float, add_sky_box: bool):
+    def create_from_pcd(self, pcd : BasicPointCloud, spatial_lr_scale : float, add_sky_box: bool, sphere_point: int=10000):
         self.spatial_lr_scale = spatial_lr_scale
         pcd_points = np.asarray(pcd.points)
         radius = np.max(np.abs(pcd_points))
-        sky_box_points = self.fibonacci_sphere(10000) * radius
+        sky_box_points = self.fibonacci_sphere(sphere_point) * radius
         pcd_colors = np.asarray(pcd.colors)
 
         if add_sky_box:
@@ -560,7 +565,7 @@ class GaussianModel:
             self._rotation[dead_indices],
             self._texture_color[dead_indices],
             self._texture_alpha[dead_indices],
-        ) = self._update_params(reinit_idx, ratio=ratio)
+        ) = self._update_params(reinit_idx, ratio=ratio) #self._split_textures(reinit_idx)
 
         self._texture_alpha[reinit_idx] = self._texture_alpha[dead_indices]
         self._scaling[reinit_idx] = self._scaling[dead_indices]
@@ -597,3 +602,12 @@ class GaussianModel:
         self.replace_tensors_to_optimizer(inds=add_idx)
 
         return num_gs
+
+    def prune_postproc(self, valid_points_mask):
+        self._xyz = self._xyz[valid_points_mask]
+        self._features_dc = self._features_dc[valid_points_mask]
+        self._features_rest = self._features_rest[valid_points_mask]
+        self._scaling = self._scaling[valid_points_mask]
+        self._rotation = self._rotation[valid_points_mask]
+        self._texture_color = self._texture_color[valid_points_mask]
+        self._texture_alpha = self._texture_alpha[valid_points_mask]

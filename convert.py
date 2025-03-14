@@ -9,12 +9,10 @@
 # For inquiries contact  george.drettakis@inria.fr
 #
 
-import logging
 import os
-import shutil
+import logging
 from argparse import ArgumentParser
-
-import cv2
+import shutil
 
 # This Python script is based on the shell converter script provided in the MipNerF 360 repository.
 parser = ArgumentParser("Colmap converter")
@@ -24,32 +22,13 @@ parser.add_argument("--source_path", "-s", required=True, type=str)
 parser.add_argument("--camera", default="OPENCV", type=str)
 parser.add_argument("--colmap_executable", default="", type=str)
 parser.add_argument("--resize", action="store_true")
+parser.add_argument("--magick_executable", default="", type=str)
 args = parser.parse_args()
 colmap_command = '"{}"'.format(args.colmap_executable) if len(args.colmap_executable) > 0 else "colmap"
+magick_command = '"{}"'.format(args.magick_executable) if len(args.magick_executable) > 0 else "magick"
 use_gpu = 1 if not args.no_gpu else 0
 
 input_folder = "/input"
-if(args.resize):
-    print("Copying and resizing...")
-
-    # Resize images.
-    os.makedirs(args.source_path + "/input_downsampled", exist_ok=True)
-
-    # Get the list of files in the source directory
-    files = os.listdir(args.source_path + "/input")
-    # Copy each file from the source directory to the destination directory
-    for file in files:
-        source_file = os.path.join(args.source_path, "input", file)
-        destination_file = os.path.join(args.source_path, "input_downsampled", file)
-        shutil.copy2(source_file, destination_file)
-
-        image = cv2.imread(destination_file)
-        scale = 800 / image.shape[1]
-        image = cv2.resize(image, None, fx=scale, fy=scale)
-        cv2.imwrite(destination_file, image)
-
-    input_folder = "/input_downsampled"
-
 if not args.skip_matching:
     os.makedirs(args.source_path + "/distorted/sparse", exist_ok=True)
 
@@ -109,5 +88,38 @@ for file in files:
     destination_file = os.path.join(args.source_path, "sparse", "0", file)
     shutil.move(source_file, destination_file)
 
+if(args.resize):
+    print("Copying and resizing...")
+
+    # Resize images.
+    os.makedirs(args.source_path + "/images_2", exist_ok=True)
+    os.makedirs(args.source_path + "/images_4", exist_ok=True)
+    os.makedirs(args.source_path + "/images_8", exist_ok=True)
+    # Get the list of files in the source directory
+    files = os.listdir(args.source_path + "/images")
+    # Copy each file from the source directory to the destination directory
+    for file in files:
+        source_file = os.path.join(args.source_path, "images", file)
+
+        destination_file = os.path.join(args.source_path, "images_2", file)
+        shutil.copy2(source_file, destination_file)
+        exit_code = os.system(magick_command + " mogrify -resize 50% " + destination_file)
+        if exit_code != 0:
+            logging.error(f"50% resize failed with code {exit_code}. Exiting.")
+            exit(exit_code)
+
+        destination_file = os.path.join(args.source_path, "images_4", file)
+        shutil.copy2(source_file, destination_file)
+        exit_code = os.system(magick_command + " mogrify -resize 25% " + destination_file)
+        if exit_code != 0:
+            logging.error(f"25% resize failed with code {exit_code}. Exiting.")
+            exit(exit_code)
+
+        destination_file = os.path.join(args.source_path, "images_8", file)
+        shutil.copy2(source_file, destination_file)
+        exit_code = os.system(magick_command + " mogrify -resize 12.5% " + destination_file)
+        if exit_code != 0:
+            logging.error(f"12.5% resize failed with code {exit_code}. Exiting.")
+            exit(exit_code)
 
 print("Done.")
