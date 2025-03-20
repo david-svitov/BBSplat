@@ -87,7 +87,7 @@ class OptimizationParams(ParamGroup):
         self.lambda_normal = 0.0
         self.lambda_texture_value = 0.0001
         self.lambda_alpha_value = 0.0001
-        self.max_impact_threshold = 500
+        self.max_impact_threshold = 100
         self.sphere_point = 10000
 
         # Densification policy
