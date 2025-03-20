@@ -36,6 +36,6 @@ python metrics.py --model_path=${OUTPUT_FOLDER}/DTU/scan118
 python metrics.py --model_path=${OUTPUT_FOLDER}/DTU/scan122
 
 # Average metrics for each dataset
-python average_error.py --folder ${OUTPUT_FOLDER}/TnT
-python average_error.py --folder ${OUTPUT_FOLDER}/MipNerf
-python average_error.py --folder ${OUTPUT_FOLDER}/DTU
+python scripts/average_error.py --folder ${OUTPUT_FOLDER}/TnT
+python scripts/average_error.py --folder ${OUTPUT_FOLDER}/MipNerf
+python scripts/average_error.py --folder ${OUTPUT_FOLDER}/DTU
